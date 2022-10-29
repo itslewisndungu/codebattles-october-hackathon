@@ -15,7 +15,7 @@ class AdvocatesListApi(GenericAPIView):
     serializer_class = AdvocatesSerializer
     queryset = Advocate.objects.all()
 
-    filter_backends = [filters.SearchFilter]
+    filterset_fields = ["username"]
     search_fields = ["username", "bio", "twitter", "name"]
 
     def get(self, request):
