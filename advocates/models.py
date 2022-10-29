@@ -7,3 +7,6 @@ class Advocate(models.Model):
     name = models.CharField(max_length=100)
     twitter = models.CharField(max_length=60)
     bio = models.TextField(max_length=250, null=True, blank=True)
+
+    def __str__(self) -> str:
+        return f"{self.username}"
