@@ -30,9 +30,10 @@ class AdvocatesListApi(GenericAPIView):
 
 
 class AdvocateRetrieveApi(GenericAPIView):
-    def get(self, request, id: str):
-        qs = Advocate.objects.all()
-        advocate = get_object_or_404(qs, id=id)
+    serializer_class = AdvocatesSerializer
+    queryset = Advocate.objects.all()
 
-        data = self.OutputSerializer(advocate).data
-        return Response(data)
+    def get(self, request, id: str):
+        advocate = get_object_or_404(self.get_queryset(), id=id)
+        serializer = self.get_serializer(advocate)
+        return Response(serializer.data)
