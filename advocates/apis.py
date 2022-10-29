@@ -1,33 +1,35 @@
-from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
-advocates = {
-    "advocates": [
-        {
-            "profile_pic": "https://pbs.twimg.com/profile_images/1489066537407365126/iViPGBVE_400x400.jpg",
-            "username": "dennisivy11",
-            "name": "Dennis Ivy",
-            "bio": "YouTuber, contributor at @traversymedia , developer advocate @agoraio and online instructor.",
-            "twitter": "https://twitter.com/dennisivy11",
-        },
-    ]
-}
-
-advocate = {
-    "profile_pic": "https://pbs.twimg.com/profile_images/1489066537407365126/iViPGBVE_400x400.jpg",
-    "username": "dennisivy11",
-    "name": "Dennis Ivy",
-    "bio": "YouTuber, contributor at @traversymedia , developer advocate @agoraio and online instructor.",
-    "twitter": "https://twitter.com/dennisivy11",
-}
+from rest_framework import serializers
+from rest_framework.generics import get_object_or_404
+from .models import Advocate
 
 
 class AdvocatesListApi(APIView):
+    """
+    Get a list of all advocates registered
+    """
+
+    class OutputSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Advocate
+            fields = ["profile_pic", "name", "twitter", "username", "bio"]
+
     def get(self, request):
-        return Response(advocates)
+        qs = Advocate.objects.all()
+        data = self.OutputSerializer(qs, many=True).data
+        return Response(data)
 
 
 class AdvocateRetrieveApi(APIView):
+    class OutputSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Advocate
+            fields = ["profile_pic", "name", "twitter", "username", "bio"]
+
     def get(self, request, id: str):
-        return Response(advocate)
+        qs = Advocate.objects.all()
+        advocate = get_object_or_404(qs, id=id)
+
+        data = self.OutputSerializer(advocate).data
+        return Response(data)
