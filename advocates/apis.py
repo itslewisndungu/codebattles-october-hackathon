@@ -17,8 +17,10 @@ class AdvocatesListApi(APIView):
 
     def get(self, request):
         qs = Advocate.objects.all()
-        data = self.OutputSerializer(qs, many=True).data
-        return Response(data)
+        res = {
+            "advocates": self.OutputSerializer(qs, many=True).data,
+        }
+        return Response(res)
 
 
 class AdvocateRetrieveApi(APIView):
