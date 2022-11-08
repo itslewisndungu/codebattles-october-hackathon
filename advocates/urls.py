@@ -1,8 +1,8 @@
 from django.urls import path
-from .apis import AdvocateRetrieveApi, AdvocatesListApi
+from .apis import AdvocateRetrieveUpdateDeleteApi, AdvocatesListCreateApi
 
 
 urlpatterns = [
-    path("", AdvocatesListApi.as_view()),
-    path("<str:username>/", AdvocateRetrieveApi.as_view()),
+    path("", AdvocatesListCreateApi.as_view()),
+    path("<str:username>/", AdvocateRetrieveUpdateDeleteApi.as_view()),
 ]
