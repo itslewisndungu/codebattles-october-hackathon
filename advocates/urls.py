@@ -4,5 +4,5 @@ from .apis import AdvocateRetrieveApi, AdvocatesListApi
 
 urlpatterns = [
     path("", AdvocatesListApi.as_view()),
-    path("<str:id>/", AdvocateRetrieveApi.as_view()),
+    path("<str:username>/", AdvocateRetrieveApi.as_view()),
 ]
