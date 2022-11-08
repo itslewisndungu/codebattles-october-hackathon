@@ -10,6 +10,7 @@ from rest_framework import status
 class AdvocatesListCreateApi(GenericAPIView):
     """
     Get a list of all advocates registered
+    Create a new advocate (requires authentication)
     """
 
     serializer_class = AdvocatesSerializer

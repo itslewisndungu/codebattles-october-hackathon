@@ -15,8 +15,34 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+
+
+@api_view(["GET"])
+def api_root(request, format=None):
+    """
+    Welcome to My implementation of the Agora october hackathon.
+    Hackathon details: https://codebattles.dev/event/dce4b8cd-b48d-4511-b4d6-b0058c179944/
+    Github: https://github.com/itslewisndungu/codebattles-october-hackathon
+
+    Sample login details:
+        Username: admin
+        Password: supercooladminpassword
+    """
+    return Response(
+        {
+            "advocates": reverse(
+                "advocates:list-create", request=request, format=format
+            ),
+        }
+    )
+
 
 urlpatterns = [
+    path("", api_root),
     path("admin/", admin.site.urls),
-    path("advocates/", include("advocates.urls")),
+    path("auth/", include("rest_framework.urls")),
+    path("advocates/", include("advocates.urls", namespace="advocates")),
 ]
